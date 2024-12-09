@@ -1,6 +1,5 @@
 import express from 'express';
 import pino from 'pino-http';
-import cors from 'cors';
 import dotenv from 'dotenv';
 import studentsRouter from './routers/students.js';
 import { errorHandler } from './middleware/errorHandler.js';
