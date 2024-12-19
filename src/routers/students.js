@@ -13,12 +13,17 @@ import {
   updateStudentSchema,
 } from '../validation/students.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
+import { isValidId } from '../middleware/isValidObjectId.js';
 
 const router = Router();
 
 router.get('/students', ctrlWrapper(getStudentsController));
 
-router.get('/students/:studentId', ctrlWrapper(getStudentByIdController));
+router.get(
+  '/students/:studentId',
+  isValidId,
+  ctrlWrapper(getStudentByIdController),
+);
 
 router.post(
   '/students',
@@ -26,12 +31,17 @@ router.post(
   ctrlWrapper(createStudentConrtoller),
 );
 
-router.delete('/students/:studentId', ctrlWrapper(deleteStudentByIdController));
+router.delete(
+  '/students/:studentId',
+  isValidId,
+  ctrlWrapper(deleteStudentByIdController),
+);
 
 router.put('/students/:studentId', ctrlWrapper(upsertStudentController));
 
 router.patch(
   '/students/:studentId',
+  isValidId,
   validateBody(updateStudentSchema),
   ctrlWrapper(patchStudentController),
 );

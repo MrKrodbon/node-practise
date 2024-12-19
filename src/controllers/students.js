@@ -6,9 +6,11 @@ import {
   getStudentById,
   updateStudent,
 } from '../services/students.js';
+import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 
 export const getStudentsController = async (req, res, next) => {
-  const students = await getAllStudents();
+  const { page, perPage } = parsePaginationParams(req.query);
+  const students = await getAllStudents({ page, perPage });
   res.status(200).json({ data: students });
 };
 
