@@ -7,10 +7,27 @@ import {
   updateStudent,
 } from '../services/students.js';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
+import { parseSortParams } from '../utils/parseSortParams.js';
+import { loginUser, registerUser } from '../services/auth.js';
+
+export const registerUserController = async (req, res) => {
+  const user = await registerUser(req.body);
+
+  res.status(201).json({
+    status: 201,
+    message: 'Successfully registered a user!',
+    data: user,
+  });
+};
+
+export const loginUserController = async (req, res) => {
+  const user = await loginUser(req.body);
+};
 
 export const getStudentsController = async (req, res, next) => {
   const { page, perPage } = parsePaginationParams(req.query);
-  const students = await getAllStudents({ page, perPage });
+  const { sortBy, sortOrder } = parseSortParams(req.query);
+  const students = await getAllStudents({ page, perPage, sortBy, sortOrder });
   res.status(200).json({ data: students });
 };
 

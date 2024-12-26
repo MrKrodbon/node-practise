@@ -1,7 +1,7 @@
 import express from 'express';
 import pino from 'pino-http';
 import dotenv from 'dotenv';
-import studentsRouter from './routers/students.js';
+import routers from './routers/routers.js';
 import { errorHandler } from './middleware/errorHandler.js';
 
 dotenv.config();
@@ -24,7 +24,7 @@ export const startServer = () => {
     res.json({ message: 'it`s work' });
   });
 
-  app.use(studentsRouter);
+  app.use(routers);
 
   app.use(errorHandler);
 
